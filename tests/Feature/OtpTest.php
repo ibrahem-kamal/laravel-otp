@@ -1,6 +1,5 @@
 <?php
 
-
 use Ibrahemkamal\Otp\Models\OtpCode;
 
 test('it generates otp code and stores it in the database', function () {
@@ -32,4 +31,3 @@ test('it returns false status if the otp code is already verified', function () 
     $response = $this->testUser->otp()->verifyOtp($otp->otp);
     expect($response->isSuccess())->toBeFalse();
 });
-

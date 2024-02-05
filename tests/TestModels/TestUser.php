@@ -11,5 +11,6 @@ class TestUser extends Model implements HasOtp
     use InteractsWithOtp;
 
     protected $guarded = [];
+
     public $timestamps = false;
 }

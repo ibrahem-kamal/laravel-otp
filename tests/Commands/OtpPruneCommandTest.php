@@ -1,6 +1,5 @@
 <?php
 
-
 test('it can prune expired otp codes', function () {
     $this->testUser->otp()->generate();
     $this->travel(6)->minutes();
@@ -16,4 +15,3 @@ test('it can prune verified otp codes', function () {
         ->assertExitCode(0);
     expect($this->testUser->otpCodes)->toBeEmpty();
 });
-

@@ -23,6 +23,6 @@ return [
         ],
         'validate_uniqueness_after_generation' => true,
         'delete_after_verification' => false,
-    ]
+    ],
 
 ];
