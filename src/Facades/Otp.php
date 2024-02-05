@@ -6,6 +6,7 @@ use Illuminate\Support\Facades\Facade;
 
 /**
  * @see \Ibrahemkamal\Otp\Otp
+ *
  * @method static \Ibrahemkamal\Otp\Otp setModel(\Illuminate\Database\Eloquent\Model $model)
  * @method static \Ibrahemkamal\Otp\Otp getModel(string $phone)
  * @method static \Ibrahemkamal\Otp\Otp setPhone(string $phone)
@@ -17,8 +18,6 @@ use Illuminate\Support\Facades\Facade;
  * @method static \Ibrahemkamal\Otp\Otp verifyOtp()
  * @method static \Ibrahemkamal\Otp\Otp isValidateUniquenessAfterGeneration()
  * @method static \Ibrahemkamal\Otp\Otp setValidateUniquenessAfterGeneration()
- *
- *
  */
 class Otp extends Facade
 {

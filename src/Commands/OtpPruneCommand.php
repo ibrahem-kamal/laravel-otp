@@ -16,9 +16,9 @@ class OtpPruneCommand extends Command
         $expired = $this->option('expired');
         $verified = $this->option('verified');
 
-
-        if (!$expired && !$verified) {
+        if (! $expired && ! $verified) {
             $this->error('You must use either expired or verified option or both.');
+
             return;
         }
 

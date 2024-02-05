@@ -6,10 +6,10 @@ use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\MorphTo;
 
-class
-OtpCode extends Model
+class OtpCode extends Model
 {
     protected $fillable = ['otp', 'phone', 'service', 'expires_at', 'verified_at'];
+
     protected $casts = [
         'expires_at' => 'datetime',
         'verified_at' => 'datetime',

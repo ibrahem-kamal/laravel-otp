@@ -1,6 +1,5 @@
 <?php
 
-
 use Ibrahemkamal\Otp\Facades\Otp;
 
 test('it throws an error if the service doesnt exist in the config file', function () {
@@ -56,7 +55,6 @@ test('it throws exception if generate method is called with no model', function 
 test('it throws exception if verifyOtp method is called with no model', function () {
     Otp::verifyOtp('1234');
 })->throws(Exception::class, 'Model is required to verify otp');
-
 
 test('it can return latest code', function () {
     $user = $this->testUser;
