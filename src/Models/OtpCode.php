@@ -26,7 +26,7 @@ class OtpCode extends Model
 
     public function relatable(): MorphTo
     {
-        return $this->morphTo();
+        return $this->morphTo(__FUNCTION__, 'relatable_type', 'relatable_id');
     }
 
     public function scopeExpired(Builder $query): Builder
