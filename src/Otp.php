@@ -133,6 +133,7 @@ class Otp
         $otpCode = $this->model->otpCodes()->where('otp', $otp)->where('phone', $this->phone)
             ->where('service', $this->service)
             ->whereNull('verified_at')
+            ->latest('id')
             ->first();
         if ($otpCode) {
             /** @phpstan-ignore-next-line */
