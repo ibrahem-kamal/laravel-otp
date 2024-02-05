@@ -2,6 +2,14 @@
 
 All notable changes to `laravel-otp` will be documented in this file.
 
+## 1.1.4 - 2024-02-05
+
+### What's Changed
+
+* update verifyCode function to retrieve latest otp first by @ibrahem-kamal in https://github.com/ibrahem-kamal/laravel-otp/pull/7
+
+**Full Changelog**: https://github.com/ibrahem-kamal/laravel-otp/compare/1.1.3...1.1.4
+
 ## 1.1.3 - 2024-02-05
 
 ### What's Changed
