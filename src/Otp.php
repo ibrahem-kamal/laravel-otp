@@ -46,11 +46,11 @@ class Otp
 
     public function generate($otp = null): OtpCode
     {
-        if (!$this->model) {
+        if (! $this->model) {
             throw new \Exception('Model is required to generate otp');
         }
         $otp = $otp ?? $this->generatePassword();
-        if (!$this->validateOtpUniqueness($otp)) {
+        if (! $this->validateOtpUniqueness($otp)) {
             return $this->generate();
         }
 
@@ -58,7 +58,7 @@ class Otp
             'otp' => $otp,
             'phone' => $this->getPhone(),
             'service' => $this->service,
-            'expires_at' => now()->addMinutes(config('otp.services.' . $this->service . '.expires_in')),
+            'expires_at' => now()->addMinutes(config('otp.services.'.$this->service.'.expires_in')),
         ]);
     }
 
@@ -76,7 +76,7 @@ class Otp
 
     public function setService(string $service = 'default'): static
     {
-        if (!config('otp.services.' . $service)) {
+        if (! config('otp.services.'.$service)) {
             throw new \Exception('Service not found in the config file');
         }
         $this->service = $service;
@@ -117,17 +117,17 @@ class Otp
 
     private function validateOtpUniqueness(string $otp): bool
     {
-        if (!$this->isValidateUniquenessAfterGeneration()) {
+        if (! $this->isValidateUniquenessAfterGeneration()) {
             return true;
         }
 
-        return !$this->model->otpCodes()->where('phone', $this->phone)
+        return ! $this->model->otpCodes()->where('phone', $this->phone)
             ->where('service', $this->service)->where('otp', $otp)->exists();
     }
 
     public function verifyOtp(string $otp): ServiceResponse
     {
-        if (!$this->model) {
+        if (! $this->model) {
             throw new \Exception('Model is required to verify otp');
         }
         $otpCode = $this->model->otpCodes()->where('otp', $otp)->where('phone', $this->phone)
@@ -153,7 +153,7 @@ class Otp
 
     private function setDefaults(): void
     {
-        $generatorOptions = config('otp.services.' . $this->service . '.otp_generator_options');
+        $generatorOptions = config('otp.services.'.$this->service.'.otp_generator_options');
 
         if ($generatorOptions) {
             $this->setGeneratorOptions(
@@ -170,7 +170,7 @@ class Otp
                 symbols: config('otp.fallback_options.otp_generator_options.symbols'),
             );
         }
-        $this->setValidateUniquenessAfterGeneration(config('otp.services.' . $this->service . '.validate_uniqueness_after_generation') ?? config('otp.fallback_options.validate_uniqueness_after_generation'));
+        $this->setValidateUniquenessAfterGeneration(config('otp.services.'.$this->service.'.validate_uniqueness_after_generation') ?? config('otp.fallback_options.validate_uniqueness_after_generation'));
     }
 
     public function getGeneratorOptions(): array
