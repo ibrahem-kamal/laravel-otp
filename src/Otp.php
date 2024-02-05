@@ -146,6 +146,12 @@ class Otp
             }
             /** @phpstan-ignore-next-line */
             $otpCode->verified_at = now();
+            /** @phpstan-ignore-next-line */
+            if ($handlers = config('otp.services.'.$otpCode->service.'.handlers')) {
+                foreach ($handlers as $handler) {
+                    app($handler)::handle($otpCode);
+                }
+            }
 
             return $this->serviceResponse->setSuccess(true)->setData($otpCode);
         }
