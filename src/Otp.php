@@ -44,12 +44,12 @@ class Otp
         return $this;
     }
 
-    public function generate(): OtpCode
+    public function generate($otp = null): OtpCode
     {
         if (! $this->model) {
             throw new \Exception('Model is required to generate otp');
         }
-        $otp = $this->generatePassword();
+        $otp = $otp ?? $this->generatePassword();
         if (! $this->validateOtpUniqueness($otp)) {
             return $this->generate();
         }
