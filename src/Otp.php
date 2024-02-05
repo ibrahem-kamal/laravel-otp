@@ -3,6 +3,7 @@
 namespace Ibrahemkamal\Otp;
 
 use Ibrahemkamal\Otp\Concerns\ServiceResponse;
+use Ibrahemkamal\Otp\Contracts\HasOtp;
 use Ibrahemkamal\Otp\Models\OtpCode;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Str;
@@ -10,17 +11,19 @@ use Illuminate\Support\Str;
 class Otp
 {
     private array $generatorOptions = [];
-    private OtpCode $otpCode;
     private string $service;
-    private ?Model $model;
+    private ?HasOtp $model = null;
     private bool $validateUniquenessAfterGeneration;
     private ServiceResponse $serviceResponse;
     private string $phone;
 
+    /**
+     * @throws \Exception
+     */
     public function __construct(ServiceResponse $serviceResponse)
     {
-        $this->setService();
         $this->serviceResponse = $serviceResponse;
+        $this->setService();
         $this->setDefaults();
     }
 
@@ -40,15 +43,18 @@ class Otp
         if (!$this->model) {
             throw new \Exception('Model is required to generate otp');
         }
-        $otp = Str::password(...$this->generatorOptions);
-        $this->otpCode = $this->model->otpCodes()->create([
+        $otp = $this->generatePassword();
+        if (!$this->validateOtpUniqueness($otp)) {
+            return $this->generate();
+        }
+        return $this->model->otpCodes()->create([
             'otp' => $otp,
-            'phone' => $this->phone,
+            'phone' => $this->getPhone(),
             'service' => $this->service,
             'expires_at' => now()->addMinutes(config('otp.services.' . $this->service . '.expires_in')),
         ]);
-        return $this->validateOtpUniqueness();
     }
+
 
     public function setGeneratorOptions($length = 4, $numbers = true, $letters = false, $symbols = false): static
     {
@@ -64,9 +70,10 @@ class Otp
     public function setService(string $service = 'default'): static
     {
         if (!config('otp.services.' . $service)) {
-            throw new \Exception('Service config not found');
+            throw new \Exception('Service not found in the config file');
         }
         $this->service = $service;
+        $this->setDefaults();
         return $this;
     }
 
@@ -81,24 +88,30 @@ class Otp
         return $this;
     }
 
+    public function getPhone(): string
+    {
+        return $this->phone;
+    }
+
     public function getModel(): ?Model
     {
         return $this->model;
     }
 
-    public function setModel(?Model $model): static
+    public function setModel(HasOtp $model): static
     {
         $this->model = $model;
+        $this->setPhone($model->getPhoneNumber());
         return $this;
     }
 
-    private function validateOtpUniqueness(): OtpCode
+    private function validateOtpUniqueness(string $otp): bool
     {
         if (!$this->isValidateUniquenessAfterGeneration()) {
-            return $this->otpCode;
+            return true;
         }
-        return $this->model->otpCodes()->where('id', '!=', $this->otpCode->id)->where('phone', $this->phone)
-            ->where('service', $this->service)->where('otp', $this->otpCode->otp)->exists() ? $this->generate() : $this->otpCode;
+        return !$this->model->otpCodes()->where('phone', $this->phone)
+            ->where('service', $this->service)->where('otp', $otp)->exists();
     }
 
     public function verifyOtp(string $otp): ServiceResponse
@@ -125,9 +138,10 @@ class Otp
         return $this->serviceResponse->setSuccess(false)->setErrors(['otp' => __('Invalid OTP')]);
     }
 
-    private function setDefaults()
+    private function setDefaults(): void
     {
         $generatorOptions = config('otp.services.' . $this->service . '.otp_generator_options');
+
         if ($generatorOptions) {
             $this->setGeneratorOptions(
                 length: $generatorOptions['length'],
@@ -137,12 +151,26 @@ class Otp
             );
         } else {
             $this->setGeneratorOptions(
-                length: config('otp.otp_generator_options.fallback_options.length'),
-                numbers: config('otp.otp_generator_options.fallback_options.numbers'),
-                letters: config('otp.otp_generator_options.fallback_options.letters'),
-                symbols: config('otp.otp_generator_options.fallback_options.symbols'),
+                length: config('otp.fallback_options.otp_generator_options.length'),
+                numbers: config('otp.fallback_options.otp_generator_options.numbers'),
+                letters: config('otp.fallback_options.otp_generator_options.letters'),
+                symbols: config('otp.fallback_options.otp_generator_options.symbols'),
             );
         }
         $this->setValidateUniquenessAfterGeneration(config('otp.services.' . $this->service . '.validate_uniqueness_after_generation') ?? config('otp.fallback_options.validate_uniqueness_after_generation'));
+    }
+
+    public function getGeneratorOptions(): array
+    {
+        return $this->generatorOptions;
+    }
+
+    /**
+     * @return string
+     */
+    protected function generatePassword(): string
+    {
+        $otp = Str::password(...$this->generatorOptions);
+        return $otp;
     }
 }

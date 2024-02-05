@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\Facade;
  * @method static \Ibrahemkamal\Otp\Otp setModel(\Illuminate\Database\Eloquent\Model $model)
  * @method static \Ibrahemkamal\Otp\Otp getModel(string $phone)
  * @method static \Ibrahemkamal\Otp\Otp setPhone(string $phone)
+ * @method static \Ibrahemkamal\Otp\Otp getPhone(string $phone)
  * @method static \Ibrahemkamal\Otp\Otp setService(string $service = 'default')
  * @method static \Ibrahemkamal\Otp\Otp getService(string $service = 'default')
  * @method static \Ibrahemkamal\Otp\Otp setGeneratorOptions($length = 32, $letters = true, $numbers = true, $symbols = true)

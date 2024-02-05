@@ -2,6 +2,7 @@
 
 namespace Ibrahemkamal\Otp\Models;
 
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\MorphTo;
 
@@ -17,5 +18,25 @@ OtpCode extends Model
     public function relatable(): MorphTo
     {
         return $this->morphTo();
+    }
+
+    public function scopeExpired(Builder $query): Builder
+    {
+        return $query->where('expires_at', '<', now());
+    }
+
+    public function scopeUnverified(Builder $query): Builder
+    {
+        return $query->whereNull('verified_at');
+    }
+
+    public function scopeVerified(Builder $query): Builder
+    {
+        return $query->whereNotNull('verified_at');
+    }
+
+    public function scopeNotExpired(Builder $query): Builder
+    {
+        return $query->where('expires_at', '>', now());
     }
 }
