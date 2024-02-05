@@ -1,6 +1,6 @@
 {
     "name": "ibrahem-kamal/laravel-otp",
-    "description": "This is my package laravel-otp",
+    "description": "generate and verify otp being sent to users",
     "keywords": [
         "ibrahemkamal",
         "laravel",
