@@ -2,6 +2,14 @@
 
 All notable changes to `laravel-otp` will be documented in this file.
 
+## 1.1.2 - 2024-02-05
+
+### What's Changed
+
+* fix morphTo Relation key conventions by @ibrahem-kamal in https://github.com/ibrahem-kamal/laravel-otp/pull/5
+
+**Full Changelog**: https://github.com/ibrahem-kamal/laravel-otp/compare/1.1.1...1.1.2
+
 ## V1.1.1 - 2024-02-05
 
 ### What's Changed
