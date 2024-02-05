@@ -2,6 +2,14 @@
 
 All notable changes to `laravel-otp` will be documented in this file.
 
+## V1.1.0 - 2024-02-05
+
+### What's Changed
+
+* added otp handlers by @ibrahem-kamal in https://github.com/ibrahem-kamal/laravel-otp/pull/3
+
+**Full Changelog**: https://github.com/ibrahem-kamal/laravel-otp/compare/1.0.3...1.1.0
+
 ## V1.0.3 - 2024-02-05
 
 ### What's Changed
