@@ -5,7 +5,6 @@ namespace Ibrahemkamal\Otp;
 use Ibrahemkamal\Otp\Concerns\ServiceResponse;
 use Ibrahemkamal\Otp\Contracts\HasOtp;
 use Ibrahemkamal\Otp\Models\OtpCode;
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Str;
 
 class Otp
@@ -54,6 +53,7 @@ class Otp
             return $this->generate();
         }
 
+        /** @phpstan-ignore-next-line */
         return $this->model->otpCodes()->create([
             'otp' => $otp,
             'phone' => $this->getPhone(),
@@ -102,7 +102,7 @@ class Otp
         return $this->phone;
     }
 
-    public function getModel(): ?Model
+    public function getModel(): ?HasOtp
     {
         return $this->model;
     }
@@ -135,6 +135,7 @@ class Otp
             ->whereNull('verified_at')
             ->first();
         if ($otpCode) {
+            /** @phpstan-ignore-next-line */
             if ($otpCode->expires_at->isPast()) {
                 return $this->serviceResponse->setSuccess(false)->setErrors(['otp' => __('OTP has expired')]);
             }
@@ -143,6 +144,7 @@ class Otp
             } else {
                 $otpCode->update(['verified_at' => now()]);
             }
+            /** @phpstan-ignore-next-line */
             $otpCode->verified_at = now();
 
             return $this->serviceResponse->setSuccess(true)->setData($otpCode);
