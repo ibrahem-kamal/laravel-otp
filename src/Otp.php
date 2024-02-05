@@ -149,7 +149,7 @@ class Otp
             /** @phpstan-ignore-next-line */
             if ($handlers = config('otp.services.'.$otpCode->service.'.handlers')) {
                 foreach ($handlers as $handler) {
-                    app($handler)::handle($otpCode);
+                    app($handler)->handle($otpCode);
                 }
             }
 
