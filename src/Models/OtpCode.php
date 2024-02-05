@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Relations\MorphTo;
 
 /**
  * Class OtpCode
- * @package Ibrahemkamal\Otp\Models
+ *
  * @property string $otp
  * @property string $phone
  * @property string $service

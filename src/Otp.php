@@ -52,6 +52,7 @@ class Otp
         if (! $this->validateOtpUniqueness($otp)) {
             return $this->generate();
         }
+
         /** @phpstan-ignore-next-line */
         return $this->model->otpCodes()->create([
             'otp' => $otp,
