@@ -2,6 +2,19 @@
 
 All notable changes to `laravel-otp` will be documented in this file.
 
+## 2.0 - 2024-03-14
+
+### What's Changed
+
+* Bump ramsey/composer-install from 2 to 3 by @dependabot in https://github.com/ibrahem-kamal/laravel-otp/pull/8
+* add support for laravel 11 by @ibrahem-kamal in https://github.com/ibrahem-kamal/laravel-otp/pull/9
+
+### New Contributors
+
+* @dependabot made their first contribution in https://github.com/ibrahem-kamal/laravel-otp/pull/8
+
+**Full Changelog**: https://github.com/ibrahem-kamal/laravel-otp/compare/1.1.4...2.0
+
 ## 1.1.4 - 2024-02-05
 
 ### What's Changed
