@@ -58,7 +58,7 @@ class Otp
             'otp' => $otp,
             'phone' => $this->getPhone(),
             'service' => $this->service,
-            'expires_at' => now()->addMinutes(config('otp.services.'.$this->service.'.expires_in')),
+            'expires_at' => now()->setTimezone(config('app.timezone'))->addMinutes(config('otp.services.'.$this->service.'.expires_in')),
         ]);
     }
 
