@@ -2,6 +2,10 @@
 
 All notable changes to `laravel-otp` will be documented in this file.
 
+## 2.1.2 - 2024-04-14
+
+**Full Changelog**: https://github.com/ibrahem-kamal/laravel-otp/compare/2.1.1...2.1.2
+
 ## 2.1.1 - 2024-04-14
 
 **Full Changelog**: https://github.com/ibrahem-kamal/laravel-otp/compare/2.1.0...2.1.1
